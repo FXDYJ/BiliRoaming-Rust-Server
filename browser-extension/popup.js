@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Save settings
   elements.saveBtn.addEventListener("click", () => {
-    const serverUrl = elements.serverUrl.value.trim().replace(/\/+$/, "");
+    const serverUrl = normalizeUrl(elements.serverUrl.value);
     if (elements.enabled.checked && !serverUrl) {
-      showMessage(elements.saveResult, "请填写服务器地址", "error");
+      showMessage(elements.saveResult, elements.serverUrl.value.trim() ? "服务器地址格式无效" : "请填写服务器地址", "error");
       return;
     }
 
@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Test connection
   elements.testBtn.addEventListener("click", () => {
-    const serverUrl = elements.serverUrl.value.trim().replace(/\/+$/, "");
+    const serverUrl = normalizeUrl(elements.serverUrl.value);
     if (!serverUrl) {
-      showMessage(elements.testResult, "请填写服务器地址", "error");
+      showMessage(elements.testResult, elements.serverUrl.value.trim() ? "服务器地址格式无效" : "请填写服务器地址", "error");
       return;
     }
 
@@ -80,6 +80,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
   });
+
+  function normalizeUrl(input) {
+    let url = input.trim().replace(/\/+$/, "");
+    if (!url) return "";
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
+    try {
+      new URL(url);
+    } catch (e) {
+      return "";
+    }
+    return url;
+  }
 
   function showMessage(element, text, className) {
     element.textContent = text;

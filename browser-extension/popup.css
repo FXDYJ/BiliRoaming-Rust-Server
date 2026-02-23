@@ -109,7 +109,7 @@ body {
   gap: 6px;
 }
 
-input[type="url"] {
+#serverUrl {
   flex: 1;
   padding: 8px 10px;
   border: 1px solid #ddd;
@@ -119,7 +119,7 @@ input[type="url"] {
   transition: border-color 0.2s;
 }
 
-input[type="url"]:focus {
+#serverUrl:focus {
   border-color: #fb7299;
 }
 

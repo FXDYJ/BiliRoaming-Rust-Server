@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiliRoaming 设置</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>BiliRoaming</h1>
+      <p class="subtitle">解除B站区域限制</p>
+    </div>
+
+    <div class="section">
+      <div class="toggle-row">
+        <label for="enabled">启用插件</label>
+        <label class="switch">
+          <input type="checkbox" id="enabled">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <label class="field-label" for="serverUrl">服务器地址</label>
+      <div class="input-row">
+        <input type="text" id="serverUrl" placeholder="bili.example.com">
+        <button id="testBtn" class="btn-test" title="测试连接">🔗</button>
+      </div>
+      <p id="testResult" class="test-result"></p>
+    </div>
+
+    <div class="section">
+      <label class="field-label" for="defaultArea">默认区域</label>
+      <select id="defaultArea">
+        <option value="cn">大陆 (CN)</option>
+        <option value="hk" selected>香港 (HK)</option>
+        <option value="tw">台湾 (TW)</option>
+        <option value="th">泰国 (TH)</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label class="field-label">功能开关</label>
+      <div class="toggle-row">
+        <span>解锁播放</span>
+        <label class="switch">
+          <input type="checkbox" id="unlockPlayurl" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span>解锁搜索</span>
+        <label class="switch">
+          <input type="checkbox" id="unlockSearch" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <button id="saveBtn" class="btn-save">保存设置</button>
+      <p id="saveResult" class="save-result"></p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

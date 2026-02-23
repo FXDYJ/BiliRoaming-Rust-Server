@@ -35,7 +35,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["inject.js"],
+      "resources": ["hooks.js", "inject.js"],
       "matches": ["*://*.bilibili.com/*"]
     }
   ]

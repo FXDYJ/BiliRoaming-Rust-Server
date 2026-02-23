@@ -8,19 +8,19 @@
 (function () {
   "use strict";
 
-  // Inject API hooks synchronously when extension is enabled.
-  // Uses chrome.storage.local directly (faster than messaging background.js).
-  // The callback fires within ~1ms, well before Next.js hydration scripts load.
-  chrome.storage.local.get("settings", (result) => {
-    const settings = result.settings;
-    if (settings && settings.enabled && settings.serverUrl) {
-      injectApiHooks();
-    }
-  });
+  // Inject API hooks SYNCHRONOUSLY at document_start, before any page scripts.
+  // Must not be inside an async callback — Next.js cached scripts can execute
+  // before chrome.storage.local.get returns, missing the __NEXT_DATA__ parse.
+  injectApiHooks();
 
   /**
    * Inject an inline script into the page context that hooks JSON.parse
    * and fetch to remove area restrictions from Bilibili API responses.
+   *
+   * The hooks are injected unconditionally for timing reliability. They only
+   * patch bilibili-specific rights.area_limit fields and are harmless on
+   * non-restricted pages. The declarativeNetRequest redirect rules (which
+   * require enabled + serverUrl) gate the actual proxy behavior.
    *
    * - JSON.parse hook: patches __NEXT_DATA__ SSR data (initial page load)
    * - fetch hook: patches API responses (SPA navigation between episodes)
